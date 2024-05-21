@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.jumbotron {
+    background-color: #e9ecef;
+    padding: 2rem 1rem;
+    border-radius: .3rem;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+#contacto {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.sitio-construccion {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.img-fluid {
+    max-width: 300px;
+    height: auto;
+}
+
+.texto-rojo {
+    color: red;
+}
