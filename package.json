@@ -1,0 +1,16 @@
+{
+  "name": "proyecto-colima",
+  "version": "1.0.0",
+  "description": "Medición del Malestar Social - Colima",
+  "main": "index.html",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "fuse.js": "^7.0.0",
+    "xlsx": "^0.17.0"
+  },
+  "keywords": [],
+  "author": "Tu Nombre",
+  "license": "ISC"
+}

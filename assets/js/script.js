@@ -1,5 +1,4 @@
-// Elimina la detección de entorno y usa una URL relativa para Vercel
-const baseUrl = '';
+const baseUrl = '/api';
 
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
@@ -22,7 +21,7 @@ function buscarEncuesta() {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Limpiar resultados anteriores
 
-    fetch(`${baseUrl}/buscar?termino=${query}`)
+    fetch(`${baseUrl}/buscar?termino=${encodeURIComponent(query)}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
