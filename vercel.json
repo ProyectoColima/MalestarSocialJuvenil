@@ -8,6 +8,8 @@
   ],
   "routes": [
     { "src": "/api/buscar", "dest": "/api/buscar.js" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/data/(.*)", "dest": "/data/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
