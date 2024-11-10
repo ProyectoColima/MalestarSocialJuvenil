@@ -26,9 +26,29 @@ function buscarEncuesta() {
         .then(data => {
             if (data.length > 0) {
                 data.forEach(encuesta => {
-                    const p = document.createElement('p');
-                    p.textContent = encuesta['Nombre de la encuesta'];
-                    resultsDiv.appendChild(p);
+                    const table = document.createElement('table');
+                    table.classList.add('table', 'table-bordered');
+
+                    const tbody = document.createElement('tbody');
+
+                    for (const key in encuesta) {
+                        if (encuesta.hasOwnProperty(key)) {
+                            const tr = document.createElement('tr');
+                            
+                            const th = document.createElement('th');
+                            th.textContent = key;
+                            tr.appendChild(th);
+                            
+                            const td = document.createElement('td');
+                            td.textContent = encuesta[key];
+                            tr.appendChild(td);
+                            
+                            tbody.appendChild(tr);
+                        }
+                    }
+
+                    table.appendChild(tbody);
+                    resultsDiv.appendChild(table);
                 });
             } else {
                 resultsDiv.innerHTML = '<p>No se encontraron resultados.</p>';
