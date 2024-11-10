@@ -94,4 +94,4 @@ document.getElementById('contactForm').addEventListener('submit', async function
         console.error('Error al enviar el formulario:', error);
         alert('Hubo un error al enviar el mensaje.');
     }
-});  
+});
