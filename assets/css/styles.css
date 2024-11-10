@@ -1,56 +1,124 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
 }
 
+/* Navbar */
 .navbar {
-    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+/* Hero Section */
+header.bg-light {
+    background-image: url('/assets/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+/* Jumbotron */
 .jumbotron {
-    background-color: #e9ecef;
-    padding: 2rem 1rem;
-    border-radius: .3rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.list-group-item {
-    cursor: pointer;
-}
-
-#contacto {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-}
-
-.sitio-construccion {
-    font-size: 24px;
+/* Texto Rojo */
+.texto-rojo {
+    color: #dc3545;
     font-weight: bold;
 }
 
+/* Sitio en Construcción */
+.sitio-construccion {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+/* Image Container */
 .image-container {
     display: flex;
     justify-content: center;
 }
 
-.img-fluid {
-    max-width: 300px;
+.image-container img {
+    max-width: 100%;
     height: auto;
+    border-radius: 10px;
 }
 
-.texto-rojo {
-    color: red;
-}
+/* Buscador de Encuestas */
 .card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+#searchInput {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.btn-primary {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Secciones */
+#secciones .list-group-item {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#secciones .list-group-item:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* Contacto */
+#contacto {
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* Tablas de Resultados */
 .table th {
     background-color: #007bff;
     color: white;
 }
 
-.table td, .table th {
-    vertical-align: middle;
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,123,255,0.05);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,0.1);
+}
+
+/* Cards para Resultados */
+.card-result {
+    margin-bottom: 20px;
+}
+
+.card-result .card-body {
+    padding: 15px;
+}
+
+/* Footer */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 1rem;
+    }
+
+    .image-container img {
+        max-width: 80%;
+    }
 }
