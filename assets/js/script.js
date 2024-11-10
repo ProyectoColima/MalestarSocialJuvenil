@@ -1,5 +1,7 @@
+// Elimina la detección de entorno y usa una URL relativa para Vercel
+const baseUrl = '';
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Resalta la sección activa en la navegación cuando el usuario hace clic
     const navLinks = document.querySelectorAll('.nav-link');
     
     navLinks.forEach(link => {
@@ -9,20 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Alerta de sitio en construcción al hacer clic en el texto
     const constructionAlert = document.querySelector('.sitio-construccion');
     constructionAlert.addEventListener('click', () => {
         alert('Este sitio está en construcción.');
     });
 });
 
-// Función para realizar la búsqueda de encuestas
 function buscarEncuesta() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Limpiar resultados anteriores
 
-    fetch(`http://localhost:3000/buscar?termino=${query}`)
+    fetch(`${baseUrl}/buscar?termino=${query}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
