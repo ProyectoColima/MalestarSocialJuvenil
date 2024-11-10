@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    const constructionAlert = document.querySelector('.sitio-construccion');
-    constructionAlert.addEventListener('click', () => {
-        alert('Este sitio está en construcción.');
-    });
+    // Eliminamos el listener de construcción ya que ya no es necesario
 });
 
 function buscarEncuesta() {
@@ -29,7 +26,7 @@ function buscarEncuesta() {
                 data.forEach(encuesta => {
                     // Crear una tarjeta para cada encuesta
                     const card = document.createElement('div');
-                    card.classList.add('card', 'mb-3');
+                    card.classList.add('card', 'mb-3', 'shadow-sm');
 
                     const cardBody = document.createElement('div');
                     cardBody.classList.add('card-body');
@@ -62,11 +59,11 @@ function buscarEncuesta() {
                     resultsDiv.appendChild(card);
                 });
             } else {
-                resultsDiv.innerHTML = '<p>No se encontraron resultados.</p>';
+                resultsDiv.innerHTML = '<p class="text-center">No se encontraron resultados.</p>';
             }
         })
         .catch(error => {
             console.error('Error al realizar la búsqueda:', error);
-            resultsDiv.innerHTML = '<p>Hubo un error en la búsqueda.</p>';
+            resultsDiv.innerHTML = '<p class="text-center text-danger">Hubo un error en la búsqueda.</p>';
         });
 }
