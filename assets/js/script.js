@@ -27,8 +27,16 @@ function buscarEncuesta() {
             if (data.length > 0) {
                 const excludeFields = ['ID', 'Fecha de registro', 'Quién registró la encuesta', 'Última actualización'];
                 data.forEach(encuesta => {
+                    // Crear una tarjeta para cada encuesta
+                    const card = document.createElement('div');
+                    card.classList.add('card', 'mb-3');
+
+                    const cardBody = document.createElement('div');
+                    cardBody.classList.add('card-body');
+
+                    // Crear la tabla
                     const table = document.createElement('table');
-                    table.classList.add('table', 'table-bordered');
+                    table.classList.add('table', 'table-striped', 'table-bordered', 'table-hover');
 
                     const tbody = document.createElement('tbody');
 
@@ -49,7 +57,9 @@ function buscarEncuesta() {
                     }
 
                     table.appendChild(tbody);
-                    resultsDiv.appendChild(table);
+                    cardBody.appendChild(table);
+                    card.appendChild(cardBody);
+                    resultsDiv.appendChild(card);
                 });
             } else {
                 resultsDiv.innerHTML = '<p>No se encontraron resultados.</p>';

@@ -42,3 +42,15 @@ body {
 .texto-rojo {
     color: red;
 }
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
