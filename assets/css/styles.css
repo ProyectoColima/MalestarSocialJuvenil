@@ -1,124 +1,59 @@
-/* General Styles */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
     margin: 0;
 }
 
-/* Navbar */
 .navbar {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Hero Section */
-header.bg-light {
-    background-image: url('/assets/images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #333;
-}
-
-/* Jumbotron */
 .jumbotron {
     background-color: #ffffff;
     border-radius: 10px;
+    padding: 2rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Texto Rojo */
 .texto-rojo {
     color: #dc3545;
     font-weight: bold;
 }
 
-/* Sitio en Construcción */
-.sitio-construccion {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #dc3545;
+.card img {
+    height: 200px;
+    object-fit: cover;
 }
 
-/* Image Container */
-.image-container {
-    display: flex;
-    justify-content: center;
+.card-body {
+    text-align: center;
 }
 
-.image-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-/* Buscador de Encuestas */
-.card {
+#contacto {
     background-color: #ffffff;
-    border: none;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-#searchInput {
-    border-radius: 0.25rem 0 0 0.25rem;
+#results .card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.btn-primary {
-    border-radius: 0 0.25rem 0.25rem 0;
-}
-
-/* Secciones */
-#secciones .list-group-item {
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#secciones .list-group-item:hover {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-/* Contacto */
-#contacto {
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-}
-
-/* Tablas de Resultados */
 .table th {
     background-color: #007bff;
     color: white;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0,123,255,0.05);
+.table td, .table th {
+    vertical-align: middle;
 }
 
-.table-hover tbody tr:hover {
-    background-color: rgba(0,123,255,0.1);
+/* Añadir márgenes entre tarjetas de secciones */
+#secciones .card {
+    transition: transform 0.2s;
 }
 
-/* Cards para Resultados */
-.card-result {
-    margin-bottom: 20px;
-}
-
-.card-result .card-body {
-    padding: 15px;
-}
-
-/* Footer */
-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .jumbotron {
-        padding: 1rem;
-    }
-
-    .image-container img {
-        max-width: 80%;
-    }
+#secciones .card:hover {
+    transform: scale(1.05);
 }
