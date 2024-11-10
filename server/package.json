@@ -1,0 +1,18 @@
+{
+    "name": "proyecto-colima-server",
+    "version": "1.0.0",
+    "description": "Servidor Node.js para buscar encuestas en un archivo Excel",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "xlsx": "^0.17.0",
+      "cors": "^2.8.5"
+    },
+    "keywords": [],
+    "author": "Tu Nombre",
+    "license": "ISC"
+  }
+  
