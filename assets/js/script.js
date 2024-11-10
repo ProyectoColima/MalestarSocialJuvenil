@@ -25,6 +25,7 @@ function buscarEncuesta() {
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
+                const excludeFields = ['ID', 'Fecha de registro', 'Quién registró la encuesta', 'Última actualización'];
                 data.forEach(encuesta => {
                     const table = document.createElement('table');
                     table.classList.add('table', 'table-bordered');
@@ -32,7 +33,7 @@ function buscarEncuesta() {
                     const tbody = document.createElement('tbody');
 
                     for (const key in encuesta) {
-                        if (encuesta.hasOwnProperty(key)) {
+                        if (encuesta.hasOwnProperty(key) && !excludeFields.includes(key)) {
                             const tr = document.createElement('tr');
                             
                             const th = document.createElement('th');
