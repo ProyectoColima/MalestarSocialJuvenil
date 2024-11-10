@@ -67,3 +67,31 @@ function buscarEncuesta() {
             resultsDiv.innerHTML = '<p class="text-center text-danger">Hubo un error en la búsqueda.</p>';
         });
 }
+
+// Código para enviar el formulario de contacto
+document.getElementById('contactForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const mensaje = document.getElementById('mensaje').value;
+
+    try {
+        const response = await fetch(`${baseUrl}/sendEmail`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, email, mensaje }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Mensaje enviado con éxito.');
+            document.getElementById('contactForm').reset(); // Limpiar formulario
+        } else {
+            alert('Error al enviar el mensaje. Inténtalo de nuevo.');
+        }
+    } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        alert('Hubo un error al enviar el mensaje.');
+    }
+});
