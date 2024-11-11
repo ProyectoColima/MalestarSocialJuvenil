@@ -23,15 +23,20 @@ function buscarEncuesta() {
         .then(data => {
             if (data.length > 0) {
                 const excludeFields = ['ID', 'Fecha de registro', 'Quién registró la encuesta', 'Última actualización'];
-                data.forEach(encuesta => {
+                
+                data.forEach((encuesta, index) => {
+                    // Crear una columna que ocupe la mitad de la pantalla para cada tarjeta
+                    const col = document.createElement('div');
+                    col.classList.add('col-md-6', 'mb-3'); // La tarjeta ocupará la mitad del ancho en pantallas medianas en adelante
+
                     // Crear una tarjeta para cada encuesta
                     const card = document.createElement('div');
-                    card.classList.add('card', 'mb-3', 'shadow-sm');
+                    card.classList.add('card', 'shadow-sm');
 
                     const cardBody = document.createElement('div');
                     cardBody.classList.add('card-body');
 
-                    // Crear la tabla
+                    // Crear la tabla dentro de la tarjeta
                     const table = document.createElement('table');
                     table.classList.add('table', 'table-striped', 'table-bordered', 'table-hover');
 
@@ -56,7 +61,8 @@ function buscarEncuesta() {
                     table.appendChild(tbody);
                     cardBody.appendChild(table);
                     card.appendChild(cardBody);
-                    resultsDiv.appendChild(card);
+                    col.appendChild(card); // Añadir la tarjeta a la columna
+                    resultsDiv.appendChild(col); // Añadir la columna al contenedor de resultados
                 });
             } else {
                 resultsDiv.innerHTML = '<p class="text-center">No se encontraron resultados.</p>';
