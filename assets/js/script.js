@@ -22,8 +22,6 @@ function buscarEncuesta() {
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
-                const excludeFields = ['ID', 'Fecha de registro', 'Quién registró la encuesta', 'Última actualización'];
-
                 // Crear una fila Bootstrap para organizar las tarjetas en filas de dos
                 let row;
                 data.forEach((encuesta, index) => {
@@ -51,22 +49,40 @@ function buscarEncuesta() {
 
                     const tbody = document.createElement('tbody');
 
-                    for (const key in encuesta) {
-                        if (encuesta.hasOwnProperty(key) && !excludeFields.includes(key)) {
-                            const tr = document.createElement('tr');
-                            
-                            const th = document.createElement('th');
-                            th.textContent = key;
-                            tr.appendChild(th);
-                            
-                            const td = document.createElement('td');
-                            td.textContent = encuesta[key];
-                            tr.appendChild(td);
-                            
-                            tbody.appendChild(tr);
-                        }
-                    }
+                    // Agregar solo el campo "Nombre de la encuesta"
+                    const trNombre = document.createElement('tr');
+                    const thNombre = document.createElement('th');
+                    thNombre.textContent = 'Nombre de la encuesta';
+                    const tdNombre = document.createElement('td');
+                    tdNombre.textContent = encuesta['Nombre de la encuesta'];
+                    trNombre.appendChild(thNombre);
+                    trNombre.appendChild(tdNombre);
+                    tbody.appendChild(trNombre);
 
+                    // Agregar solo el campo "Fecha última actualización"
+                    const trFecha = document.createElement('tr');
+                    const thFecha = document.createElement('th');
+                    thFecha.textContent = 'Fecha última actualización';
+                    const tdFecha = document.createElement('td');
+                    tdFecha.textContent = encuesta['Fecha ultima actualización'];
+                    trFecha.appendChild(thFecha);
+                    trFecha.appendChild(tdFecha);
+                    tbody.appendChild(trFecha);
+
+                    // Agregar un enlace para "Ver estadísticas de la encuesta"
+                    const trLink = document.createElement('tr');
+                    const thLink = document.createElement('th');
+                    thLink.textContent = 'Estadísticas';
+                    const tdLink = document.createElement('td');
+                    const link = document.createElement('a');
+                    link.href = '#'; // Enlace temporal
+                    link.textContent = 'Ver estadísticas de la encuesta';
+                    tdLink.appendChild(link);
+                    trLink.appendChild(thLink);
+                    trLink.appendChild(tdLink);
+                    tbody.appendChild(trLink);
+
+                    // Añadir la tabla a la tarjeta
                     table.appendChild(tbody);
                     cardBody.appendChild(table);
                     card.appendChild(cardBody);
