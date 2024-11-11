@@ -23,8 +23,17 @@ function buscarEncuesta() {
         .then(data => {
             if (data.length > 0) {
                 const excludeFields = ['ID', 'Fecha de registro', 'Quién registró la encuesta', 'Última actualización'];
-                
+
+                // Crear una fila Bootstrap para organizar las tarjetas en filas de dos
+                let row;
                 data.forEach((encuesta, index) => {
+                    // Crear una nueva fila cada dos tarjetas
+                    if (index % 2 === 0) {
+                        row = document.createElement('div');
+                        row.classList.add('row', 'mb-4'); // Espacio entre filas
+                        resultsDiv.appendChild(row); // Añadir la fila al contenedor de resultados
+                    }
+
                     // Crear una columna que ocupe la mitad de la pantalla para cada tarjeta
                     const col = document.createElement('div');
                     col.classList.add('col-md-6', 'mb-3'); // La tarjeta ocupará la mitad del ancho en pantallas medianas en adelante
@@ -62,7 +71,7 @@ function buscarEncuesta() {
                     cardBody.appendChild(table);
                     card.appendChild(cardBody);
                     col.appendChild(card); // Añadir la tarjeta a la columna
-                    resultsDiv.appendChild(col); // Añadir la columna al contenedor de resultados
+                    row.appendChild(col); // Añadir la columna a la fila actual
                 });
             } else {
                 resultsDiv.innerHTML = '<p class="text-center">No se encontraron resultados.</p>';
