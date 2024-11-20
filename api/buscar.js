@@ -12,7 +12,7 @@ module.exports = (req, res) => {
 
     try {
         // Ruta relativa dentro de la función serverless
-        const workbook = xlsx.readFile(path.join(process.cwd(), 'data', 'Datos.xlsx'));
+        const workbook = xlsx.readFile(path.join(process.cwd(), 'data', 'Data.xlsx'));
         const worksheet = workbook.Sheets['Datos generales'];
         
         if (!worksheet) {
