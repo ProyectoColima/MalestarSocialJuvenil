@@ -19,11 +19,11 @@ module.exports = (req, res) => {
         const workbook = xlsx.readFile(filePath);
         console.log('Hojas disponibles:', workbook.SheetNames);
 
-        // Verificar si existe la hoja "Datos generales"
-        const worksheet = workbook.Sheets['Datos generales'];
+        // Verificar si existe la hoja "Datos_generales"
+        const worksheet = workbook.Sheets['Datos_generales'];
         if (!worksheet) {
-            console.error('Hoja "Datos generales" no encontrada en el archivo.');
-            return res.status(404).json({ message: 'Hoja "Datos generales" no encontrada.' });
+            console.error('Hoja "Datos_generales" no encontrada en el archivo.');
+            return res.status(404).json({ message: 'Hoja "Datos_generales" no encontrada.' });
         }
 
         // Leer los datos de la hoja
@@ -31,13 +31,13 @@ module.exports = (req, res) => {
         console.log('Datos leídos:', datos);
 
         if (datos.length === 0) {
-            console.warn('No se encontraron datos en la hoja "Datos generales".');
-            return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos generales".' });
+            console.warn('No se encontraron datos en la hoja "Datos_generales".');
+            return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos_generales".' });
         }
 
         // Configuración de Fuse.js para coincidencias aproximadas
         const fuse = new Fuse(datos, {
-            keys: ['Nombre de la encuesta'],
+            keys: ['Nombre de la encuesta'], // Cambia si necesitas buscar en otra columna
             threshold: 0.4 // Ajusta el umbral para mayor o menor sensibilidad
         });
 
