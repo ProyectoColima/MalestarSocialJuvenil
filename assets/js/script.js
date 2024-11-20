@@ -69,19 +69,18 @@ function buscarEncuesta() {
                     trFecha.appendChild(tdFecha);
                     tbody.appendChild(trFecha);
 
-                    // Enlace para "Ver estadísticas de la encuesta"
+                    // Agregar un enlace para "Ver estadísticas de la encuesta"
                     const trLink = document.createElement('tr');
                     const thLink = document.createElement('th');
                     thLink.textContent = 'Estadísticas';
                     const tdLink = document.createElement('td');
                     const link = document.createElement('a');
-                    link.href = `detalles.html?id=${encuesta.ID}`; // Redirige con el ID de la encuesta
+                    link.href = '#'; // Enlace temporal
                     link.textContent = 'Ver estadísticas de la encuesta';
                     tdLink.appendChild(link);
                     trLink.appendChild(thLink);
                     trLink.appendChild(tdLink);
                     tbody.appendChild(trLink);
-
 
                     // Añadir la tabla a la tarjeta
                     table.appendChild(tbody);
