@@ -11,46 +11,46 @@ module.exports = (req, res) => {
     const termino = req.query.termino ? req.query.termino.toLowerCase() : '';
 
     try {
-        // Verificar la ruta del archivo
-        const filePath = path.join(process.cwd(), 'data', 'Data.xlsx');
-        console.log('Ruta del archivo:', filePath);
+        // Función para buscar en un archivo específico
+        const buscarEnArchivo = (nombreArchivo) => {
+            const filePath = path.join(process.cwd(), 'data', nombreArchivo);
+            console.log(`Leyendo archivo: ${filePath}`);
 
-        // Leer el archivo Excel
-        const workbook = xlsx.readFile(filePath);
-        console.log('Hojas disponibles:', workbook.SheetNames);
+            const workbook = xlsx.readFile(filePath);
+            console.log(`Hojas disponibles en ${nombreArchivo}:`, workbook.SheetNames);
 
-        // Verificar si existe la hoja "Datos_generales"
-        const worksheet = workbook.Sheets['Datos_generales'];
-        if (!worksheet) {
-            console.error('Hoja "Datos_generales" no encontrada en el archivo.');
-            return res.status(404).json({ message: 'Hoja "Datos_generales" no encontrada.' });
-        }
+            const worksheet = workbook.Sheets['Datos_generales'];
+            if (!worksheet) {
+                console.warn(`Hoja "Datos_generales" no encontrada en ${nombreArchivo}`);
+                return [];
+            }
 
-        // Leer los datos de la hoja
-        const datos = xlsx.utils.sheet_to_json(worksheet);
-        console.log('Datos leídos:', datos);
+            const datos = xlsx.utils.sheet_to_json(worksheet);
+            console.log(`Datos leídos de ${nombreArchivo}:`, datos);
 
-        if (datos.length === 0) {
-            console.warn('No se encontraron datos en la hoja "Datos_generales".');
-            return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos_generales".' });
-        }
+            // Configuración de Fuse.js para coincidencias aproximadas
+            const fuse = new Fuse(datos, {
+                keys: ['Nombre de la encuesta'], // Ajusta el campo si es necesario
+                threshold: 0.4 // Ajusta el umbral para mayor o menor sensibilidad
+            });
 
-        // Configuración de Fuse.js para coincidencias aproximadas
-        const fuse = new Fuse(datos, {
-            keys: ['Nombre de la encuesta'], // Cambia si necesitas buscar en otra columna
-            threshold: 0.4 // Ajusta el umbral para mayor o menor sensibilidad
-        });
+            // Realizar búsqueda con coincidencias aproximadas
+            const resultados = fuse.search(termino).map(result => result.item);
+            return resultados;
+        };
 
-        // Realizar búsqueda con coincidencias aproximadas
-        const resultados = fuse.search(termino).map(result => result.item);
+        // Buscar en ambos archivos
+        const resultadosArchivo1 = buscarEnArchivo('Data.xlsx');
+        const resultadosArchivo2 = buscarEnArchivo('Data1.xlsx');
 
-        if (resultados.length === 0) {
-            console.warn('No se encontraron resultados para el término:', termino);
-            return res.status(404).json({ message: 'No se encontraron resultados para el término buscado.' });
-        }
+        // Formatear la respuesta
+        const respuesta = {
+            resultadosArchivo1,
+            resultadosArchivo2,
+        };
 
-        // Enviar resultados al cliente
-        res.status(200).json(resultados);
+        // Enviar respuesta al cliente
+        res.status(200).json(respuesta);
     } catch (error) {
         console.error('Error al procesar la búsqueda:', error);
         res.status(500).json({ message: 'Error interno del servidor' });
