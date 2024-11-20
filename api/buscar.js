@@ -11,17 +11,27 @@ module.exports = (req, res) => {
     const termino = req.query.termino ? req.query.termino.toLowerCase() : '';
 
     try {
-        // Ruta relativa dentro de la función serverless
-        const workbook = xlsx.readFile(path.join(process.cwd(), 'data', 'Datos.xlsx'));
+        // Verificar la ruta del archivo
+        const filePath = path.join(process.cwd(), 'data', 'Data.xlsx');
+        console.log('Ruta del archivo:', filePath);
+
+        // Leer el archivo Excel
+        const workbook = xlsx.readFile(filePath);
+        console.log('Hojas disponibles:', workbook.SheetNames);
+
+        // Verificar si existe la hoja "Datos generales"
         const worksheet = workbook.Sheets['Datos generales'];
-        
         if (!worksheet) {
+            console.error('Hoja "Datos generales" no encontrada en el archivo.');
             return res.status(404).json({ message: 'Hoja "Datos generales" no encontrada.' });
         }
-        
+
+        // Leer los datos de la hoja
         const datos = xlsx.utils.sheet_to_json(worksheet);
-        
+        console.log('Datos leídos:', datos);
+
         if (datos.length === 0) {
+            console.warn('No se encontraron datos en la hoja "Datos generales".');
             return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos generales".' });
         }
 
@@ -33,6 +43,11 @@ module.exports = (req, res) => {
 
         // Realizar búsqueda con coincidencias aproximadas
         const resultados = fuse.search(termino).map(result => result.item);
+
+        if (resultados.length === 0) {
+            console.warn('No se encontraron resultados para el término:', termino);
+            return res.status(404).json({ message: 'No se encontraron resultados para el término buscado.' });
+        }
 
         // Enviar resultados al cliente
         res.status(200).json(resultados);
