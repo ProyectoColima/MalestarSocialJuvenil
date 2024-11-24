@@ -12,7 +12,7 @@ module.exports = (req, res) => {
 
     try {
         // Verificar la ruta del archivo
-        const filePath = path.join(process.cwd(), 'data', 'Data1.xlsx');
+        const filePath = path.join(process.cwd(), 'data', 'Data3.xlsx');
         console.log('Ruta del archivo:', filePath);
 
         // Leer el archivo Excel
