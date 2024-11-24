@@ -20,10 +20,10 @@ module.exports = (req, res) => {
         console.log('Hojas disponibles:', workbook.SheetNames);
 
         // Verificar si existe la hoja "Datos_generales"
-        const worksheet = workbook.Sheets['Datos_generales'];
+        const worksheet = workbook.Sheets['Datos Generales'];
         if (!worksheet) {
-            console.error('Hoja "Datos_generales" no encontrada en el archivo.');
-            return res.status(404).json({ message: 'Hoja "Datos_generales" no encontrada.' });
+            console.error('Hoja "Datos Generales" no encontrada en el archivo.');
+            return res.status(404).json({ message: 'Hoja "Datos Generales" no encontrada.' });
         }
 
         // Leer los datos de la hoja
@@ -31,8 +31,8 @@ module.exports = (req, res) => {
         console.log('Datos leídos:', datos);
 
         if (datos.length === 0) {
-            console.warn('No se encontraron datos en la hoja "Datos_generales".');
-            return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos_generales".' });
+            console.warn('No se encontraron datos en la hoja "Datos Generales".');
+            return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos Generales".' });
         }
 
         // Configuración de Fuse.js para coincidencias aproximadas
