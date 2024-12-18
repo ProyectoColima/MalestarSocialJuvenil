@@ -3,78 +3,77 @@ const Fuse = require('fuse.js');
 const path = require('path');
 
 let datos = [];  // Variable global para almacenar los datos
+let datosCargados = false; // Para saber si ya se cargaron
 
 module.exports = (req, res) => {
     if (req.method !== 'GET') {
-        res.status(405).json({ message: 'Método no permitido' });
-        return;
+        return res.status(405).json({ message: 'Método no permitido' });
     }
 
-    const { termino, id } = req.query; // Obtener los parámetros de la consulta
+    const { termino, id } = req.query; 
 
-    // Si 'id' es proporcionado, devolver los detalles de la encuesta
-    if (id) {
-        const encuesta = datos.find(item => item.ID === id);
-        if (encuesta) {
-            return res.status(200).json(encuesta);  // Devolver la encuesta encontrada
-        } else {
-            return res.status(404).json({ message: 'Encuesta no encontrada.' });
-        }
-    }
-
-    // Si 'termino' es proporcionado, realizar la búsqueda
-    if (termino) {
-        try {
-            // Ajustar la ruta al archivo Excel.
-            // Asumimos que 'api' y 'data' están al mismo nivel.
+    try {
+        // Cargar datos si aún no se han cargado
+        if (!datosCargados) {
             const filePath = path.join(process.cwd(), 'data', 'Data3.xlsx');
             console.log('Ruta del archivo:', filePath);
 
-            // Leer el archivo Excel solo una vez
-            if (datos.length === 0) {
-                const workbook = xlsx.readFile(filePath);
-                console.log('Hojas disponibles:', workbook.SheetNames);
+            const workbook = xlsx.readFile(filePath);
+            console.log('Hojas disponibles:', workbook.SheetNames);
 
-                const worksheet = workbook.Sheets['Datos Generales'];
-                if (!worksheet) {
-                    console.error('Hoja "Datos Generales" no encontrada en el archivo.');
-                    return res.status(404).json({ message: 'Hoja "Datos Generales" no encontrada.' });
-                }
-
-                // Leer los datos de la hoja
-                datos = xlsx.utils.sheet_to_json(worksheet);
-                console.log('Datos leídos:', datos);
-
-                if (datos.length === 0) {
-                    console.warn('No se encontraron datos en la hoja "Datos Generales".');
-                    return res.status(404).json({ message: 'No se encontraron datos en la hoja "Datos Generales".' });
-                }
+            const worksheet = workbook.Sheets['Datos Generales'];
+            if (!worksheet) {
+                console.error('Hoja "Datos Generales" no encontrada.');
+                return res.status(404).json({ message: 'Hoja "Datos Generales" no encontrada.' });
             }
 
-            // Configuración de Fuse.js para coincidencias aproximadas
+            datos = xlsx.utils.sheet_to_json(worksheet);
+            console.log('Datos leídos:', datos);
+
+            if (datos.length === 0) {
+                console.warn('No se encontraron datos en "Datos Generales".');
+                return res.status(404).json({ message: 'No se encontraron datos.' });
+            }
+
+            datosCargados = true;
+        }
+
+        // Si se solicita por id
+        if (id) {
+            const encuesta = datos.find(item => item.ID === id);
+            if (encuesta) {
+                return res.status(200).json(encuesta);
+            } else {
+                return res.status(404).json({ message: 'Encuesta no encontrada.' });
+            }
+        }
+
+        // Si se solicita por termino
+        if (termino) {
             const fuse = new Fuse(datos, {
                 keys: ['Nombre de la encuesta'],
                 threshold: 0.4
             });
 
-            // Realizar búsqueda con coincidencias aproximadas
-            const resultados = fuse.search(termino).map(result => result.item);
+            const resultados = fuse.search(termino).map(r => r.item);
 
             if (resultados.length === 0) {
-                console.warn('No se encontraron resultados para el término:', termino);
-                return res.status(404).json({ message: 'No se encontraron resultados para el término buscado.' });
+                console.warn('No se encontraron resultados para:', termino);
+                return res.status(404).json({ message: 'No se encontraron resultados.' });
             }
 
-            // Agregar el ID de la encuesta para que se use en el enlace de detalles
             resultados.forEach(encuesta => {
-                encuesta.detailsLink = `/detalles_encuesta.html?id=${encuesta['ID']}`;  // Agregar el enlace de detalles
+                encuesta.detailsLink = `/detalles_encuesta.html?id=${encuesta['ID']}`;
             });
 
-            // Enviar resultados al cliente con el enlace agregado
-            res.status(200).json(resultados);
-        } catch (error) {
-            console.error('Error al procesar la búsqueda:', error);
-            res.status(500).json({ message: 'Error interno del servidor' });
+            return res.status(200).json(resultados);
         }
+
+        // Si no se pasó ni termino ni id
+        return res.status(400).json({ message: 'Parámetro término o id requerido.' });
+
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+        return res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
