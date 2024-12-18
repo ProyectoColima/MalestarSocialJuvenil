@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Inicio <span class="sr-only">(actual)</span></a>
+                        <a class="nav-link" href="index.html">Inicio <span class="sr-only">(actual)</span></a>
                     </li>
                 </ul>
             </div>
@@ -55,27 +55,37 @@
         const urlParams = new URLSearchParams(window.location.search);
         const encuestaId = urlParams.get('id');  // 'id' es el parámetro de URL
         
-        // Hacer una solicitud fetch para obtener los detalles de la encuesta
-        fetch(`/api/encuesta/${encuestaId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    const detallesDiv = document.getElementById('encuesta-details');
-                    detallesDiv.innerHTML = `
-                        <h3>${data['Nombre de la encuesta']}</h3>
-                        <p><strong>Fecha última actualización:</strong> ${data['Fecha ultima actualización']}</p>
-                        <p><strong>Objetivo:</strong> ${data['Objetivo']}</p>
-                        <p><strong>Población objetivo:</strong> ${data['Muestreo Población Objetivo']}</p>
-                        <p><strong>Link:</strong> <a href="${data['Link']}" target="_blank">Ver más</a></p>
-                    `;
-                } else {
-                    alert('No se encontraron detalles para esta encuesta.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar los detalles de la encuesta:', error);
-                alert('Hubo un error al cargar los detalles.');
-            });
+        // Verificar si se obtuvo un id
+        if (!encuestaId) {
+            alert('No se proporcionó un ID de encuesta.');
+        } else {
+            // Hacer una solicitud fetch para obtener los detalles de la encuesta
+            fetch(`/api/buscar?id=${encuestaId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Respuesta de red no fue ok ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        const detallesDiv = document.getElementById('encuesta-details');
+                        detallesDiv.innerHTML = `
+                            <h3>${data['Nombre de la encuesta'] || 'Sin nombre'}</h3>
+                            <p><strong>Fecha última actualización:</strong> ${data['Fecha ultima actualización'] || 'No disponible'}</p>
+                            <p><strong>Objetivo:</strong> ${data['Objetivo'] || 'No disponible'}</p>
+                            <p><strong>Población objetivo:</strong> ${data['Muestreo Población Objetivo'] || 'No disponible'}</p>
+                            <p><strong>Link:</strong> ${data['Link'] ? `<a href="${data['Link']}" target="_blank">Ver más</a>` : 'No disponible'}</p>
+                        `;
+                    } else {
+                        alert('No se encontraron detalles para esta encuesta.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los detalles de la encuesta:', error);
+                    alert('Hubo un error al cargar los detalles.');
+                });
+        }
     </script>
 </body>
 </html>
