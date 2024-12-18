@@ -40,7 +40,8 @@ module.exports = (req, res) => {
 
         // Si se solicita por id
         if (id) {
-            const encuesta = datos.find(item => item.ID === id);
+            const encuestaID = parseInt(id, 10); // Convertir el id a número
+            const encuesta = datos.find(item => item.ID === encuestaID);
             if (encuesta) {
                 return res.status(200).json(encuesta);
             } else {
