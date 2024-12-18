@@ -27,7 +27,7 @@ module.exports = (req, res) => {
         try {
             // Ajustar la ruta al archivo Excel.
             // Asumimos que 'api' y 'data' están al mismo nivel.
-            const filePath = path.join(__dirname, '..', 'data', 'Data3.xlsx');
+            const filePath = path.join(process.cwd(), 'data', 'Data3.xlsx');
             console.log('Ruta del archivo:', filePath);
 
             // Leer el archivo Excel solo una vez
