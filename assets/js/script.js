@@ -75,7 +75,7 @@ function buscarEncuesta() {
                     thLink.textContent = 'Estadísticas';
                     const tdLink = document.createElement('td');
                     const link = document.createElement('a');
-                    link.href = `detalles_encuesta.html?id=${encuesta['ID']}`; // Redirige al detalle de la encuesta
+                    link.href = `./detalles_encuesta.html?id=${encuesta['ID']}`; // Redirige al detalle de la encuesta
                     link.textContent = 'Ver estadísticas de la encuesta';
                     tdLink.appendChild(link);
                     trLink.appendChild(thLink);
