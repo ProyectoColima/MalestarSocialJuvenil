@@ -1,20 +1,16 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["data/**/*.xlsx"]
-      }
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    }
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "assets/**/*", "use": "@vercel/static" },
+    { "src": "data/**/*", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/public/$1" }
+    { "src": "/api/buscar", "dest": "/api/buscar.js" },
+    { "src": "/api/sendEmail", "dest": "/api/sendEmail.js" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/data/(.*)", "dest": "/data/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
