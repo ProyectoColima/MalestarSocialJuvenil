@@ -25,7 +25,7 @@ module.exports = (req, res) => {
     // Si 'termino' es proporcionado, realizar la búsqueda
     if (termino) {
         try {
-            const filePath = path.join(process.cwd(), 'data', 'Data3.xlsx');
+            const filePath = path.join(process.cwd(), 'public', 'data', 'Data3.xlsx');
             console.log('Ruta del archivo:', filePath);
 
             // Leer el archivo Excel solo una vez
